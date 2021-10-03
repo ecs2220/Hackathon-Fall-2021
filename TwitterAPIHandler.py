@@ -30,14 +30,11 @@ def get_list_of_tweet_api_data(tweet_file_data_list: list):
     tweet_id_list_string = ",".join(tweet_id_list)
 
     params.update({"ids": tweet_id_list_string})
-    params.update({"ids": "1252630938770649089,1243968198111789058"})
     response = session.get("https://api.twitter.com/labs/2/tweets", params=params)
     print(response.status_code)
     print(response.headers)
-    print(response.text)
     twitter_json = json.loads(response.text)
 
-    print(json.dumps(twitter_json, indent=2))
     data_array = twitter_json["data"]
     for tweet_data in data_array:
         tweet_id = tweet_data["id"]
@@ -60,9 +57,9 @@ def get_list_of_tweet_api_data(tweet_file_data_list: list):
 
 
 def is_a_reply(data):
-    if data["in_reply_to_user_id"] is not None and data["in_reply_to_user_id"] != "":
-        return False
-    return True
+    if "in_reply_to_user_id" in data and data["in_reply_to_user_id"] != "":
+        return True
+    return False
 
 
 def get_hashtags_from_tweet_data(data):
@@ -74,12 +71,10 @@ def get_hashtags_from_tweet_data(data):
 
 
 def convert_created_at_to_epoch_time(time_str: str):
-    dt = datetime.datetime.strptime(time_str + " UTC", "%Y-%m-%dT%H:%M%S.%fZ %Z")
-    print(dt.now())
+    dt = datetime.datetime.strptime(time_str + " UTC", "%Y-%m-%dT%H:%M:%S.%fZ %Z")
     return dt.timestamp() * 1000
 
 
 def convert_created_at_to_date_str(time_str: str):
-    dt = datetime.datetime.strptime(time_str + " UTC", "%Y-%m-%dT%H:%M%S.%fZ %Z")
-    print(dt.strftime("%m-%d-%Y"))
+    dt = datetime.datetime.strptime(time_str + " UTC", "%Y-%m-%dT%H:%M:%S.%fZ %Z")
     return dt.strftime("%m-%d-%Y")

@@ -21,8 +21,8 @@ def convert_str_to_real_or_fake(convert_str: str):
 
 
 class TweetFileData:
-    def __init__(self, news_index: int,
-                 tweet_id: int,
+    def __init__(self, news_index: str,
+                 tweet_id: str,
                  claim_or_news: ClaimOrNews,
                  real_or_fake: RealOrFake,
                  ):
@@ -112,15 +112,15 @@ class TweetAPIData:
         return str(self.__tweet_id__) + "," \
                + self.__date_str__ + "," \
                 + str(self.__epoch_time__) + "," \
-                + self.__content__.replace(",", " ") + "," \
+                + self.__content__.replace(",", " ").replace("\n", " ") + "," \
                 + "|".join(self.__hash_tags__) + "," \
                 + str(self.__like_count__) + "," \
                 + str(self.__retweet_count__) + "," \
                 + str(self.__reply_count__) + "," \
                 + str(self.__user_id__) + "," \
                 + str(self.__is_reply__) + "," \
-                + str(self.__real_or_fake__) + "," \
-                + str(self.__claim_or_news__)
+                + str(self.__real_or_fake__.value) + "," \
+                + str(self.__claim_or_news__.value)
 
 
 class NewsData:
