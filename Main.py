@@ -15,7 +15,6 @@ def get_tweet_file_data_list(filepath: str, claim_or_news: ClaimOrNews, list_of_
     counter = 0
     for index, row in df.iterrows():
         tweet_id = str(row["tweet_id"])
-        print(counter)
         counter += 1
         if not list_of_tweet_ids.__contains__(tweet_id):
             continue
