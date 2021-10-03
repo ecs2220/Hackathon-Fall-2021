@@ -3,7 +3,7 @@ import json
 import datetime
 from DataStructures import TweetAPIData
 
-bearer_token_edwardsturt_app1 = "AAAAAAAAAAAAAAAAAAAAANJWHQEAAAAAMaM5vS7iAXBQNTIFWrd%2BozAxWEY%3D6oV0ao4YJQojl0becTMxhWXPHV9wz9IiLUhToGpz5PBtV30uCT"
+bearer_token_edwardsturt_app1 = "XXXXXXXXXXXXXXXX"
 
 params = {"tweet.fields": "text,author_id,created_at,public_metrics,entities,in_reply_to_user_id"}
 
