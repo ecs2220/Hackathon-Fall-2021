@@ -120,7 +120,7 @@ class TweetAPIData:
                 + str(self.__user_id__) + "," \
                 + str(self.__is_reply__) + "," \
                 + str(self.__real_or_fake__.value) + "," \
-                + str(self.__claim_or_news__.value)
+                + str(self.__claim_or_news__.value) + "\n"
 
 
 class NewsData:
