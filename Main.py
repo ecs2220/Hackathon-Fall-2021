@@ -29,10 +29,9 @@ def get_tweet_file_data_list(filepath: str, claim_or_news: ClaimOrNews, list_of_
 
 def get_list_of_tweet_ids(filepath: str):
     to_return = []
-    file = open(filepath, "r")
-    for line in file:
-        to_return.append(line.strip())
-    file.close()
+    df = pandas.read_csv(filepath)
+    for index, row in df.iterrows():
+        to_return.append(str(row["tweet_id"]))
     return to_return
 
 
@@ -40,12 +39,12 @@ def main():
     print("Starting program")
     claim_or_news = ClaimOrNews.CLAIM
     filepath_to_csv = "data\\unifiedCSVs\\raw_claim_twitter.csv"
-    filepath_to_tweet_ids = ""
+    filepath_to_tweet_ids = "data\\toPull\\claim_twitter_ids.csv"
     list_of_tweet_ids = get_list_of_tweet_ids(filepath_to_tweet_ids)
     tweet_file_data_list = get_tweet_file_data_list(filepath_to_csv, claim_or_news, list_of_tweet_ids)
 
     output_file_path = "twitterAPIData\\claim_twitter.csv"
-    output_file = open(output_file_path, "w+")
+    output_file = open(output_file_path, "w+", encoding="utf-8")
 
     index = 0
     max_list_length = 100
@@ -62,7 +61,7 @@ def main():
             print(twitter_api_data.to_file_string())
         index += max_list_length
         counter += 1
-        if counter == 8:
+        if counter == 850:
             print("Sleeping for 15 minutes")
             time.sleep(15 * 60)
             counter = 0
