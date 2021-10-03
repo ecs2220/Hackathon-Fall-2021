@@ -9,9 +9,14 @@ import TwitterAPIHandler
 def get_tweet_file_data_list(filepath: str, claim_or_news: ClaimOrNews, list_of_tweet_ids):
     to_return = []
     seen_tweet_ids = []
-    df = pandas.read_csv(filepath)
+    #df = pandas.read_csv(filepath)
+    chunk = pandas.read_csv(filepath, chunksize=1000000)
+    df = pandas.concat(chunk)
+    counter = 0
     for index, row in df.iterrows():
         tweet_id = str(row["tweet_id"])
+        print(counter)
+        counter += 1
         if not list_of_tweet_ids.__contains__(tweet_id):
             continue
         if seen_tweet_ids.__contains__(tweet_id):
@@ -29,7 +34,9 @@ def get_tweet_file_data_list(filepath: str, claim_or_news: ClaimOrNews, list_of_
 
 def get_list_of_tweet_ids(filepath: str):
     to_return = []
-    df = pandas.read_csv(filepath)
+  #  df = pandas.read_csv(filepath)
+    chunk = pandas.read_csv(filepath, chunksize=1000000)
+    df = pandas.concat(chunk)
     for index, row in df.iterrows():
         to_return.append(str(row["tweet_id"]))
     return to_return
@@ -37,13 +44,13 @@ def get_list_of_tweet_ids(filepath: str):
 
 def main():
     print("Starting program")
-    claim_or_news = ClaimOrNews.CLAIM
-    filepath_to_csv = "data\\unifiedCSVs\\raw_claim_twitter.csv"
-    filepath_to_tweet_ids = "data\\toPull\\claim_twitter_ids.csv"
+    claim_or_news = ClaimOrNews.NEWS
+    filepath_to_csv = "data\\unifiedCSVs\\raw_news_twitter.csv"
+    filepath_to_tweet_ids = "data\\toPull\\news_twitter_ids.csv"
     list_of_tweet_ids = get_list_of_tweet_ids(filepath_to_tweet_ids)
     tweet_file_data_list = get_tweet_file_data_list(filepath_to_csv, claim_or_news, list_of_tweet_ids)
 
-    output_file_path = "twitterAPIData\\claim_twitter.csv"
+    output_file_path = "twitterAPIData\\news_twitter.csv"
     output_file = open(output_file_path, "w+", encoding="utf-8")
 
     index = 0
